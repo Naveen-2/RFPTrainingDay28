@@ -20,6 +20,8 @@ public class UserMenu {
                  10.Count Contacts by city
                  11.Count Contacts by state
                  12.Sort contacts
+                 13.Read File Data
+                 14.Write Data to File
                 """);
         System.out.print("Enter your choice: ");
         return input.nextInt();

@@ -1,5 +1,9 @@
 package com;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -125,6 +129,43 @@ public class AddressBookManager {
             System.out.println(contact);
             System.out.println();
         }
+    }
+
+    public void writeToFile() {
+
+        String bookName = ScannerUtil.getString("Enter book name: ");
+        String fileName = bookName + ".txt";
+
+        StringBuffer addressBookBuffer = new StringBuffer();
+        addressBookDict.values().forEach(contact -> {
+            String personDataString = contact.toString().concat("\n");
+            addressBookBuffer.append(personDataString);
+        });
+
+        try {
+            Files.write(Paths.get(fileName), addressBookBuffer.toString().getBytes());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public List<String> readFileData() {
+
+        List<String> addressBookList = new ArrayList<>();
+        String bookName = ScannerUtil.getString("Enter book name: ");
+        String fileName = bookName + ".txt";
+        System.out.println("Reading from : " + fileName + "\n");
+        try {
+            Files.lines(new File(fileName).toPath()).map(String::trim).forEach(contacts -> {
+                System.out.println(contacts);
+                addressBookList.add(contacts);
+            });
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return addressBookList;
     }
 
 }
